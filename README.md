@@ -13,7 +13,7 @@ Prepares a common environment to avoid altering hundreds of dotfiles to change y
 
 | Name                  | Description                                      | Default            |
 |-----------------------|--------------------------------------------------|--------------------|
-| `affected_users`      | The users affected by the custom settings        | `[ "{{ ansible_user_id }}" ]` |
+| `affected_users`      | The users using the common env                   | `[ "{{ ansible_user_id }}" ]` |
 
 ## Dependencies
 
