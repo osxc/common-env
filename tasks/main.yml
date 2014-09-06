@@ -4,7 +4,7 @@
         state=touch
         owner={{ item }}
         mode=0544
-  with_items: "{{ affected_users }}"
+  with_items: affected_users
 
 - name: source this common env from every known dotfile
   ignore_errors: True
