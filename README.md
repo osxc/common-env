@@ -1,7 +1,7 @@
 common-env
 ==========
 
-Prepares a common environment to avoid altering hundreds of dotfiles in the other roles needing to alter your shell environment.
+Prepares a common environment to avoid altering hundreds of dotfiles to change your shell environment.
 
 [![Build Status](https://travis-ci.org/osxc/common-env.svg)](https://travis-ci.org/osxc/common-env/)
 
