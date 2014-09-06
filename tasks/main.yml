@@ -1,0 +1,17 @@
+---
+- name: create the common_env
+  file: dest=/Users/{{ item }}/.common_env
+        state=file
+        owner={{ item }}
+        mode=0544
+
+- name: source this common env from every known dotfile
+  ignore_errors: True
+  lineinfile: dest=/Users/{{ item[0] }}/{{ item[1] }}
+              regexp='source ~/\.common_env'
+              line='source ~/.common_env'
+              owner={{ item[0] }}
+              mode=0544
+  with_nested:
+  - "{{ affected_users }}"
+  - [ '.bash_profile', '.bash_login', '.zshrc', '.zshenv' ]
