@@ -1,7 +1,7 @@
 ---
 - name: create the common_env
   file: dest=/Users/{{ item }}/.common_env
-        state=file
+        state=touch
         owner={{ item }}
         mode=0544
   with_items: "{{ affected_users }}"
