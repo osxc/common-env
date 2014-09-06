@@ -1,0 +1,16 @@
+---
+galaxy_info:
+author: Robin Ricard
+description: Create a common env for all of your dotfiles
+company: osxc
+license: MIT
+min_ansible_version: 1.2
+platforms:
+- name: MacOSX
+versions:
+- 10.9
+- 10.10
+categories:
+- development
+- system
+dependencies: []
