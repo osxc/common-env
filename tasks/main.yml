@@ -15,4 +15,26 @@
               mode=0544
   with_nested:
   - "{{ affected_users }}"
-  - [ '.bash_profile', '.bash_login', '.zshrc', '.zshenv' ]
+  - [ '.bash_profile', '.bash_login', '.zshrc', '.zshenv', '.profile' ]
+  register: dotfiles_done
+
+# ensure .profile is present at minimum, or update if it exists, when the above fails
+- name: create .profile or update if it exists with homebrew_cask_opts
+  lineinfile: dest=/Users/{{ item[0] }}/.profile
+              regexp="^export HOMEBREW_CASK_OPTS"
+              line="export HOMEBREW_CASK_OPTS=\"--appdir=/Applications\""
+              create=yes
+  with_nested:
+  - "{{ affected_users }}"
+  when: dotfiles_done|failed
+
+- name: source this common env from the new .profile
+  ignore_errors: True
+  lineinfile: dest=/Users/{{ item[0] }}/.profile
+              regexp='source ~/\.common_env'
+              line='source ~/.common_env'
+              owner={{ item[0] }}
+              mode=0544
+  with_nested:
+  - "{{ affected_users }}"
+  when: dotfiles_done|failed
