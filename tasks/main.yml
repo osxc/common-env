@@ -12,7 +12,7 @@
               regexp='source ~/\.common_env'
               line='source ~/.common_env'
               owner={{ item[0] }}
-              mode=0544
+              mode=0744
   with_nested:
   - "{{ affected_users }}"
   - [ '.bash_profile', '.bash_login', '.zshrc', '.zshenv' ]
