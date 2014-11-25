@@ -6,7 +6,7 @@
         mode=0544
   with_items: affected_users
 
-- name: source this common env from every known dotfile
+- name: source the common env from every known dotfile
   ignore_errors: True
   lineinfile: dest=/Users/{{ item[0] }}/{{ item[1] }}
               regexp='source ~/\.common_env'
@@ -15,4 +15,17 @@
               mode=0744
   with_nested:
   - "{{ affected_users }}"
-  - [ '.bash_profile', '.bash_login', '.zshrc', '.zshenv' ]
+  - [ '.bash_profile', '.bash_login', '.zshrc', '.zshenv', '.profile' ]
+  register: dotfiles_done
+
+# ensure .profile is present at minimum, or update if it exists, when the above fails
+- name: create and source the common env from a new .profile
+  ignore_errors: True
+  lineinfile: dest=/Users/{{ item }}/.profile
+              regexp='source ~/\.common_env'
+              line='source ~/.common_env'
+              owner={{ item }}
+              mode=0544
+              create=yes
+  with_items: affected_users
+  when: dotfiles_done|failed
